@@ -1,0 +1,17 @@
+# terrainproject
+
+Plan for reading in the data and converting the values to colorized pixels representing both the water and the elevation of the above-water terrain:
+
+1. I'll first read the CITYNAME.terrain.txt file to get the meta info (like size and water sources) and elevation values
+2. I'll then use a 2D array (a grid) to store the elevation values for easy access
+3. I'll find out where teh water sources are and what their levels are
+4. I'll use some sort of method that will be used to mark areas as flooded if they are at or below the water level (method has yet to be figured out implementation-wise and just figuring it out)
+5. I'll try to assign different colors to different elevation levels
+6. Hopefully then an image will be generated!
+
+Language and tools I plan on using for generating an image or graphic pixel-by-pixel using data: 
+
+Even though using swift for image generation is a recipe for disaster (at least for me), I'll try to still figure out a way to use it in the project. I'll also potentially be using some other tools (see below):
+  a) Core Graphics, a framework that will help me draw the image pixel-by-pixel
+  b) Of course, swift foundation will be imported
+  
