@@ -1,0 +1,74 @@
+//Hi Mr. Oswald! All the code below does is generate a random 3 by 3 array of colors according to the RGB color index and its properties. So it doesn't simulate any flooding and doesn't incorporate different land elevations and their relationship with flooding.
+
+import Foundation
+
+struct Pixel {
+    var red: UInt8
+    var green: UInt8
+    var blue: UInt8
+}
+
+func generatePixelArray(width: Int, height: Int) -> [[Pixel]] {
+    var pixelArray = [[Pixel]]()
+    
+    for _ in 0..<height {
+        var row = [Pixel]()
+        for _ in 0..<width {
+            let pixel = Pixel(
+                red: UInt8.random(in: 0...255),
+                green: UInt8.random(in: 0...255),
+                blue: UInt8.random(in: 0...255)
+            )
+            row.append(pixel)
+        }
+        pixelArray.append(row)
+    }
+    
+    return pixelArray
+}
+
+func getColorName(red: UInt8, green: UInt8, blue: UInt8) -> String {
+    let colors: [(name: String, r: Int, g: Int, b: Int)] = [
+        ("Red", 255, 0, 0),
+        ("Green", 0, 255, 0),
+        ("Blue", 0, 0, 255),
+        ("Yellow", 255, 255, 0),
+        ("Cyan", 0, 255, 255),
+        ("Magenta", 255, 0, 255),
+        ("White", 255, 255, 255),
+        ("Black", 0, 0, 0),
+        ("Gray", 128, 128, 128),
+        ("Orange", 255, 165, 0),
+        ("Purple", 128, 0, 128),
+        ("Brown", 165, 42, 42)
+    ]
+    
+    var closestColor = "Unknown"
+    var minDistance = Double.infinity
+    
+    for color in colors {
+        let distance = sqrt(pow(Double(red) - Double(color.r), 2) +
+                            pow(Double(green) - Double(color.g), 2) +
+                            pow(Double(blue) - Double(color.b), 2))
+        if distance < minDistance {
+            minDistance = distance
+            closestColor = color.name
+        }
+    }
+    
+    return closestColor
+}
+
+let pixelArray = generatePixelArray(width: 3, height: 3)
+
+print("Generated pixel array with dimensions: \(pixelArray.count) x \(pixelArray[0].count)")
+
+print("First few pixels:")
+for i in 0..<min(3, pixelArray.count) {
+    for j in 0..<min(3, pixelArray[i].count) {
+        let pixel = pixelArray[i][j]
+        let colorName = getColorName(red: pixel.red, green: pixel.green, blue: pixel.blue)
+        print("(\(pixel.red), \(pixel.green), \(pixel.blue)) - \(colorName)", terminator: "  ")
+    }
+    print()
+}
